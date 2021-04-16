@@ -35,7 +35,7 @@ public class User {
         return mScore;
     }
 
-    public void getScore(int score) {
+    public void setScore(int score) {
         mScore = score;
     }
 
@@ -47,4 +47,3 @@ public class User {
         return mUsername;
     }
 }
-

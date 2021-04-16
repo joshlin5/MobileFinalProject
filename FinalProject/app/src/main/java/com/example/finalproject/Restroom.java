@@ -1,4 +1,4 @@
 package com.example.finalproject;
 
-public class Bathroom {
+public class Restroom {
 }

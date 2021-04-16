@@ -16,8 +16,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-
-
     private UserDatabase mUserDb;
     private UserDao userDao;
 
@@ -52,7 +50,4 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, Weather.class);
         startActivity(intent);
     }
-
-
-
 }
