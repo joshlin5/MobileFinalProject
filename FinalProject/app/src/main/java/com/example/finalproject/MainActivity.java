@@ -26,6 +26,10 @@ public class MainActivity extends AppCompatActivity {
         return userDao.highScore(username);
     }
 
+    public List<Integer> getAllScores(String username) {
+        return userDao.getAllScores(username);
+    }
+
     public void insertUser(User user) {
         userDao.insertUser(user);
     }
