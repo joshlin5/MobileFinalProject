@@ -20,11 +20,11 @@ public interface UserDao {
     public List<String> getAllUsers();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public long insertQuestion(User user);
+    public long insertUser(User user);
 
     @Update
-    public void updateQuestion(User user);
+    public void updateUser(User user);
 
     @Delete
-    public void deleteQuestion(User user);
+    public void deleteUser(User user);
 }

@@ -21,5 +21,5 @@ public abstract class UserDatabase extends RoomDatabase {
         return mUserDatabase;
     }
 
-    public abstract User userDao();
+    public abstract UserDao userDao();
 }
