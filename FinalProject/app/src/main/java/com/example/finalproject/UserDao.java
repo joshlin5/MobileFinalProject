@@ -13,7 +13,7 @@ public interface UserDao {
     @Query("SELECT MAX(score) FROM User WHERE username = :username")
     public int highScore(String username);
 
-    @Query("SELECT score FROM User WHERE username = :username ORDER BY score")
+    @Query("SELECT score FROM User WHERE username = :username")
     public List<Integer> getAllScores(String username);
 
     @Query("SELECT DISTINCT username FROM User")

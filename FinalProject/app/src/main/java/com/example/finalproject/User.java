@@ -18,6 +18,11 @@ public class User {
     @ColumnInfo(name = "score")
     private int mScore;
 
+    public User(String username, int score) {
+        mUsername = username;
+        mScore = score;
+    }
+
     public void setId(long id) {
         mId = id;
     }
