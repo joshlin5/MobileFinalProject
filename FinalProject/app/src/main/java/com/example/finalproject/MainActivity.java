@@ -1,13 +1,27 @@
 package com.example.finalproject;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+
+
     private UserDatabase mUserDb;
     private UserDao userDao;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
         mUserDb = UserDatabase.getInstance(getApplicationContext());
         UserDao userDao = mUserDb.userDao();
+
     }
 
     public List<String> getAllUsers() {
@@ -33,5 +48,11 @@ public class MainActivity extends AppCompatActivity {
     public void insertUser(User user) {
         userDao.insertUser(user);
     }
+    public void onClick(View view) {
+        Intent intent = new Intent(this, Weather.class);
+        startActivity(intent);
+    }
+
+
 
 }
