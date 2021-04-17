@@ -15,7 +15,7 @@ import androidx.core.app.ActivityCompat;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements GameInfoDialog.GameInfoDialogListener{
 
     private UserDatabase mUserDb;
     private UserDao userDao;
@@ -57,6 +57,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClick(View view) {
         Intent intent = new Intent(this, Weather.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onDialogPositiveClick() {
+        Intent intent = new Intent(this, Hallway.class);
+        intent.putExtra("previousActivity", "Main");
         startActivity(intent);
     }
 }
