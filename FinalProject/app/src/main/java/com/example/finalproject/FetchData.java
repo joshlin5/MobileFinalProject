@@ -82,14 +82,12 @@ public class FetchData extends Application {
         try {
             JSONObject dataObj = json.getJSONObject("main");
             JSONArray weatherArray = json.getJSONArray("weather");
-
-            /*
-            field.setcurrentTemp(dataObj.getString("temp"));
+            Weather field = new Weather();
 
             JSONObject subjectObj = weatherArray.getJSONObject(0);
 
             field.SetDesc(subjectObj.getString("description"));
-            */
+
 
 
         }

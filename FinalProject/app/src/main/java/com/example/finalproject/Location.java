@@ -11,8 +11,8 @@ import java.util.List;
 
 public class Location implements LocationListener {
 
-    public String longitude;
-    public String latitude;
+    public double longitude;
+    public double latitude;
     private Weather mWeather;
 
 
@@ -20,9 +20,9 @@ public class Location implements LocationListener {
     @Override
     public void onLocationChanged(android.location.Location loc) {
         mWeather = new Weather();
-        longitude = "Longitude: " +loc.getLongitude();
+        longitude = loc.getLongitude();
 
-        latitude = "Latitude: " +loc.getLatitude();
+        latitude = loc.getLatitude();
         mWeather.setLatitude(latitude);
         mWeather.setLongitude(longitude);
 
@@ -47,11 +47,6 @@ public class Location implements LocationListener {
         // TODO Auto-generated method stub
     }
 
-    public String getLongitude(){
-        return longitude;
-    }
-    public String getLatitude(){
-        return latitude;
-    }
+
 
 }

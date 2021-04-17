@@ -8,6 +8,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -20,6 +21,8 @@ public class Weather extends AppCompatActivity {
     private FetchData mFetchData;
     private LocationManager locManager = null;
     private LocationListener locListener = null;
+    ImageView background;
+    private String desc;
     public String longitude = null;
     public String latitude = null;
 
@@ -33,6 +36,19 @@ public class Weather extends AppCompatActivity {
 
                 @Override
                 public void onDataReceived(List<Weather> data) {
+
+                    Weather tempp = data.get(0);
+
+
+                    if(tempp.desc.equals("clear sky"))
+                        background.setImageResource(R.drawable.school);
+
+                    if(tempp.desc.equals("rain") || tempp.desc.equals("shower rain"))
+                        background.setImageResource(R.drawable.rain);
+
+                    else
+                        background.setImageResource(R.drawable.schoolcloudy);
+
                     Log.d(TAG,"success");
                 }
 
@@ -70,14 +86,19 @@ public class Weather extends AppCompatActivity {
 
 
     }
-    public void setLongitude(String s) {
-        longitude = s;
+    public void setLongitude(double s) {
+       // longitude = Double.toString(s);
+        longitude = "-82.8595922";
 
     }
 
-    public void setLatitude(String s) {
-        latitude = s;
+    public void setLatitude(double s) {
+       // latitude = Double.toString(s);
+        latitude = "34.6556779";
 
+    }
+    public void SetDesc(String s) {
+        desc = s;
     }
 
 
