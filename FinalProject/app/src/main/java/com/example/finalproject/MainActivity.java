@@ -8,6 +8,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -18,17 +19,24 @@ public class MainActivity extends AppCompatActivity {
 
     private UserDatabase mUserDb;
     private UserDao userDao;
+    Button startButton;
 
-
+    // Example of how to get the username from pref file
+    // SharedPreferences prefs = this.getActivity().getSharedPreferences("myPrefs.xml", Context.MODE_PRIVATE);
+    // prefs.getString("username", "ERROR");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        startButton = findViewById(R.id.startButton);
+        startButton.setOnClickListener(v -> {
+            GameInfoDialog dialog = new GameInfoDialog();
+            dialog.show(getSupportFragmentManager(), "Username Game Info Dialog");
+        });
         mUserDb = UserDatabase.getInstance(getApplicationContext());
         UserDao userDao = mUserDb.userDao();
-
     }
 
     public List<String> getAllUsers() {
@@ -46,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     public void insertUser(User user) {
         userDao.insertUser(user);
     }
+
     public void onClick(View view) {
         Intent intent = new Intent(this, Weather.class);
         startActivity(intent);
