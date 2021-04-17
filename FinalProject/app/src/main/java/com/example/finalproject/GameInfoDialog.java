@@ -17,6 +17,12 @@ import androidx.fragment.app.DialogFragment;
 
 public class GameInfoDialog extends DialogFragment{
 
+    public interface GameInfoDialogListener {
+        // Callback for "OK" button
+        void onDialogPositiveClick();
+    }
+
+    GameInfoDialogListener listener;
     EditText username;
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
@@ -47,7 +53,9 @@ public class GameInfoDialog extends DialogFragment{
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
+                        listener.onDialogPositiveClick();
                         editor.putString("username", username.getText().toString());
+                        editor.putInt("points", 0);
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -56,5 +64,20 @@ public class GameInfoDialog extends DialogFragment{
                     }
                 });
         return builder.create();
+    }
+
+    /**
+     *
+     * @param context Interface to global information about an application environment
+     * @pre
+     * context = NULL or context = [some data]
+     * @post
+     * [listener will be attached to context]
+     */
+    // Inspired from Zybooks
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        listener = (GameInfoDialogListener) context;
     }
 }

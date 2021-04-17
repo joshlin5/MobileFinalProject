@@ -30,7 +30,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements GameInfoDialog.GameInfoDialogListener{
 
     private UserDatabase mUserDb;
     private final int REQUEST_TAKE_PHOTO = 1;
@@ -76,6 +76,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClick(View view) {
         Intent intent = new Intent(this, Weather.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onDialogPositiveClick() {
+        Intent intent = new Intent(this, Hallway.class);
+        intent.putExtra("previousActivity", "Main");
         startActivity(intent);
     }
     @Override
