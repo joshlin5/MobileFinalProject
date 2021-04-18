@@ -60,7 +60,7 @@ public class Hallway extends AppCompatActivity implements CorrectDialog.correctD
 
         // If previous activity was MainActivity.java
         if(previousActivity.equals("main")) {
-            // Explanation after they choose an answer
+            // Explanation of correct answer
             String explanation = "You should always pull the mask over your nose so there is less chance you breath in a virus. " +
                     "But most importantly, the mask should cover the mouth so it will stop most of your virus and bacteria you breath out from reaching others.";
             // 1 is correct answer

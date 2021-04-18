@@ -20,12 +20,11 @@ public class Restroom extends AppCompatActivity implements CorrectDialog.correct
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.hallway);
-        Intent mIntent = getIntent();
+        // Initializing
         prefs = this.getSharedPreferences("myPrefs.xml", Context.MODE_PRIVATE);
         editor = prefs.edit();
-        highScore = prefs.getInt("highScore", -1);
-        currentScore = prefs.getInt("currentScore", -1);
 
+        // Initializing buttons
         highScoreButton = findViewById(R.id.highScore);
         currentScoreButton = findViewById(R.id.currentScore);
         question = findViewById(R.id.question);
@@ -36,6 +35,7 @@ public class Restroom extends AppCompatActivity implements CorrectDialog.correct
         answer3 = findViewById(R.id.answer3);
         destination = findViewById(R.id.destination);
 
+        // Setting correct visibility
         question.setVisibility(View.VISIBLE);
         questionText.setVisibility(View.VISIBLE);
         answer.setVisibility(View.VISIBLE);
@@ -44,19 +44,25 @@ public class Restroom extends AppCompatActivity implements CorrectDialog.correct
         answer3.setVisibility(View.VISIBLE);
         destination.setVisibility(View.INVISIBLE);
 
+        // Displaying high score and current score
+        highScore = prefs.getInt("highScore", -1);
+        currentScore = prefs.getInt("currentScore", -1);
         highScoreButton.setText("High Score: " + highScore);
         currentScoreButton.setText("Current Score: " + currentScore);
-        String explanation = "You should always pull the mask over your nose so there is less chance you breath in a virus. " +
-                "But most importantly, the mask should cover the mouth so it will stop most of your virus and bacteria you breath out from reaching others.";
-        // 1 is correct answer
+
+        // Explanation of correct answer
+        String explanation = "You should always wash your hands after using the restroom. " +
+                "Make sure to use soap when washing your hands and wash for at least 20 seconds.";
+
+        // 3 is correct answer
         answer1.setOnClickListener(v -> {
-            String correctAnswer = "Correct Answer! " + explanation;
+            String wrongAnswer = "Wrong Answer! " + explanation;
             currentScore += 1;
             editor.putInt("currentScore", currentScore);
             editor.apply();
             currentScoreButton.setText("Current Score: " + currentScore);
-            CorrectDialog dialog = new CorrectDialog(correctAnswer, true);
-            dialog.show(getSupportFragmentManager(), "Correct Answer");
+            CorrectDialog dialog = new CorrectDialog(wrongAnswer, false);
+            dialog.show(getSupportFragmentManager(), "Wrong Answer/Game Over");
         });
         answer2.setOnClickListener(v -> {
             String wrongAnswer = "Wrong Answer! " + explanation;
@@ -64,12 +70,14 @@ public class Restroom extends AppCompatActivity implements CorrectDialog.correct
             dialog.show(getSupportFragmentManager(), "Wrong Answer/Game Over");
         });
         answer3.setOnClickListener(v -> {
-            String wrongAnswer = "Wrong Answer! " + explanation;
-            CorrectDialog dialog = new CorrectDialog(wrongAnswer, false);
-            dialog.show(getSupportFragmentManager(), "Wrong Answer/Game Over");
+            String correctAnswer = "Correct Answer! " + explanation;
+            CorrectDialog dialog = new CorrectDialog(correctAnswer, true);
+            dialog.show(getSupportFragmentManager(), "Correct Answer");
         });
         destination.setOnClickListener(v -> {
-            Intent intent = new Intent(this, Restroom.class);
+            Intent intent = new Intent(this, Hallway.class);
+            // Lets Hallway know what the previous activity was
+            intent.putExtra("previousActivity", "restroom");
             startActivity(intent);
         });
 
