@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements GameInfoDialog.GameInfoDialogListener, SameUsernameFragment.SameUsernameFragmentListener{
@@ -70,19 +71,19 @@ public class MainActivity extends AppCompatActivity implements GameInfoDialog.Ga
         });
         // Initializing database
         mUserDb = UserDatabase.getInstance(getApplicationContext());
+        User user = new User("Bob", 10);
+        mUserDb.userDao().insertUser(user);
     }
-
-
 
     // For both GameInfoDialog and SameUsernameFragment callback
     @Override
     public void onDialogPositiveClick() {
         // Get it again in case it changed since dialog popped up
         String username = prefs.getString("username", "ERROR");
-
         // Check whether user is already in database or not
         int count = mUserDb.userDao().userCount(username);
         int highScore;
+
         if (count > 0) {
             // If username is already in database, find the highest score
             highScore = mUserDb.userDao().highScore(username);
