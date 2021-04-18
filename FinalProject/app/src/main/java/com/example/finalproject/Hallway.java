@@ -57,6 +57,7 @@ public class Hallway extends AppCompatActivity implements correctDialog.correctD
                 String correctAnswer = "Correct Answer! " + explanation;
                 currentScore += 1;
                 editor.putInt("currentScore", currentScore);
+                editor.apply();
                 currentScoreButton.setText("Current Score: " + currentScore);
                 correctDialog dialog = new correctDialog(correctAnswer, true);
                 dialog.show(getSupportFragmentManager(), "Correct Answer");
@@ -72,13 +73,66 @@ public class Hallway extends AppCompatActivity implements correctDialog.correctD
                 dialog.show(getSupportFragmentManager(), "Wrong Answer/Game Over");
             });
         } else if (previousActivity.equals("classroom")) {
+            questionText.setText("You notice one of your classmate, Bob, is coughing and looks pale. What do you do?");
+            answer1.setText("Tell your friends and laugh at Bob with them");
+            answer2.setText("Tell the teacher that Bob is coughing and looks pale");
+            answer3.setText("Keep walking and ignore him");
+
+            String explanation = "If you ever notice one of your classmates look sick or is coughing, always tell the teacher whenever you get a chance so they can be sent to the nurse." +
+                    "If you let a sick student stay in your class, there is a chance some people in your class will also become sick.";
+
             // 2 is correct answer
+            answer1.setOnClickListener(v -> {
+                String wrongAnswer = "Wrong Answer! " + explanation;
+                correctDialog dialog = new correctDialog(wrongAnswer, false);
+                dialog.show(getSupportFragmentManager(), "Wrong Answer/Game Over");
+            });
+            answer2.setOnClickListener(v -> {
+                String correctAnswer = "Correct Answer! " + explanation;
+                currentScore += 1;
+                currentScoreButton.setText("Current Score: " + currentScore);
+                editor.putInt("currentScore", currentScore);
+                editor.apply();
+                correctDialog dialog = new correctDialog(correctAnswer, true);
+                dialog.show(getSupportFragmentManager(), "Correct Answer");
+            });
+            answer3.setOnClickListener(v -> {
+                String wrongAnswer = "Wrong Answer! " + explanation;
+                correctDialog dialog = new correctDialog(wrongAnswer, false);
+                dialog.show(getSupportFragmentManager(), "Wrong Answer/Game Over");
+            });
 
 
         }
         else if(previousActivity.equals("restroom")) {
-            // 3 is correct answer
+            questionText.setText("You are about to cough but you do not have a mask on. What do you do?");
+            answer1.setText("Cough as loud as you can so everyone knows you coughed");
+            answer2.setText("Cover your mouth with your hands and cough");
+            answer3.setText("Cover your mouth with your elbow and cough");
 
+            String explanation = "When coughing, make sure to cough into your elbow and wash your hands and elbows as soon as possible after. " +
+                    "It's best not to cough into your hands because you could easily touch something else with you hands and transfer the germs.";
+
+            // 3 is correct answer
+            answer1.setOnClickListener(v -> {
+                String wrongAnswer = "Wrong Answer! " + explanation;
+                correctDialog dialog = new correctDialog(wrongAnswer, false);
+                dialog.show(getSupportFragmentManager(), "Wrong Answer/Game Over");
+            });
+            answer2.setOnClickListener(v -> {
+                String correctAnswer = "Wrong Answer! " + explanation;
+                correctDialog dialog = new correctDialog(correctAnswer, false);
+                dialog.show(getSupportFragmentManager(), "Wrong Answer/Game Over");
+            });
+            answer3.setOnClickListener(v -> {
+                String wrongAnswer = "Correct Answer! " + explanation;
+                currentScore += 1;
+                editor.putInt("currentScore", currentScore);
+                editor.apply();
+                currentScoreButton.setText("Current Score: " + currentScore);
+                correctDialog dialog = new correctDialog(wrongAnswer, true);
+                dialog.show(getSupportFragmentManager(), "Correct Answer");
+            });
         }
     }
 

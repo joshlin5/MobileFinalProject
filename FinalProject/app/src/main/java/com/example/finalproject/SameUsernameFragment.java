@@ -17,19 +17,21 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
-public class GameInfoDialog extends DialogFragment{
+public class SameUsernameFragment extends DialogFragment{
 
-    public interface GameInfoDialogListener {
+    public interface SameUsernameFragmentListener {
         // Callback for "OK" button
         void onDialogPositiveClick();
+        void onSameDialogNegativeClick();
     }
 
-    GameInfoDialogListener listener;
+    SameUsernameFragmentListener listener;
     EditText username;
-    TextView usernameTextView;
+    TextView sameUsername, usernameTextView;
     String name;
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
+    boolean sameUsernameBool = false;
 
     /**
      *
@@ -47,9 +49,8 @@ public class GameInfoDialog extends DialogFragment{
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Game Instructions");
         // Telling Dialog which layout to use and to use the EditText
-        View inflater = LayoutInflater.from(getContext()).inflate(R.layout.username_fragment, (ViewGroup) getView(), false);
-        username = inflater.findViewById(R.id.usernameEditText);
-        usernameTextView = inflater.findViewById(R.id.usernameTextView);
+        View inflater = LayoutInflater.from(getContext()).inflate(R.layout.use_same_username_fragment, (ViewGroup) getView(), false);
+        sameUsername = inflater.findViewById(R.id.sameUsername);
         prefs = this.requireActivity().getSharedPreferences("myPrefs.xml", Context.MODE_PRIVATE);
         editor = prefs.edit();
 
@@ -59,17 +60,13 @@ public class GameInfoDialog extends DialogFragment{
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        name = username.getText().toString();
-                        if (!name.equals("") && name.length() > 0) {
-                            editor.putString("username", name);
-                        }
                         listener.onDialogPositiveClick();
                         editor.putInt("points", 0);
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // Goes back to Starting Screen
+                        listener.onSameDialogNegativeClick();
                     }
                 });
         return builder.create();
@@ -87,6 +84,6 @@ public class GameInfoDialog extends DialogFragment{
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        listener = (GameInfoDialogListener) context;
+        listener = (SameUsernameFragmentListener) context;
     }
 }

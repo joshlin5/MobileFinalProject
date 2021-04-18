@@ -31,7 +31,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity implements GameInfoDialog.GameInfoDialogListener{
+public class MainActivity extends AppCompatActivity implements GameInfoDialog.GameInfoDialogListener, SameUsernameFragment.SameUsernameFragmentListener{
 
     private UserDatabase mUserDb;
     private final int REQUEST_TAKE_PHOTO = 1;
@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements GameInfoDialog.Ga
     Button startButton;
     private ImageView mPhoto;
     private File mPhotoFile;
+    SharedPreferences prefs;
+    SharedPreferences.Editor editor;
 
     // Example of how to get the username from pref file
     // SharedPreferences prefs = this.getActivity().getSharedPreferences("myPrefs.xml", Context.MODE_PRIVATE);
@@ -49,11 +51,20 @@ public class MainActivity extends AppCompatActivity implements GameInfoDialog.Ga
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        prefs = this.getSharedPreferences("myPrefs.xml", Context.MODE_PRIVATE);
+        editor = prefs.edit();
         mPhoto = findViewById(R.id.background);
         startButton = findViewById(R.id.startButton);
         startButton.setOnClickListener(v -> {
-            GameInfoDialog dialog = new GameInfoDialog();
-            dialog.show(getSupportFragmentManager(), "Username Game Info Dialog");
+            String name = prefs.getString("username", null);
+
+            if(name != null) {
+
+            }
+            else {
+                GameInfoDialog dialog = new GameInfoDialog();
+                dialog.show(getSupportFragmentManager(), "Username Game Info Dialog");
+            }
         });
         mUserDb = UserDatabase.getInstance(getApplicationContext());
     }
@@ -85,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements GameInfoDialog.Ga
         intent.putExtra("previousActivity", "main");
         startActivity(intent);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.appbar_menu, menu);
@@ -187,5 +199,9 @@ public class MainActivity extends AppCompatActivity implements GameInfoDialog.Ga
 
     }
 
-
+    @Override
+    public void onSameDialogNegativeClick() {
+        GameInfoDialog dialog = new GameInfoDialog();
+        dialog.show(getSupportFragmentManager(), "Username Game Info Dialog");
+    }
 }
