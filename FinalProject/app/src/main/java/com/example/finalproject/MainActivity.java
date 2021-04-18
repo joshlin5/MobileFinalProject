@@ -45,10 +45,6 @@ public class MainActivity extends AppCompatActivity implements GameInfoDialog.Ga
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
 
-    // Example of how to get the username from pref file
-    // SharedPreferences prefs = this.getActivity().getSharedPreferences("myPrefs.xml", Context.MODE_PRIVATE);
-    // prefs.getString("username", "ERROR");
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,8 +58,10 @@ public class MainActivity extends AppCompatActivity implements GameInfoDialog.Ga
         // Initializing start button and setting onClick listener
         startButton = findViewById(R.id.startButton);
         startButton.setOnClickListener(v -> {
+            // Username from shared pref file
             String name = prefs.getString("username", null);
 
+            // Check whether username is already in the pref file
             if(name != null) {
                 SameUsernameFragment dialog = new SameUsernameFragment();
                 dialog.show(getSupportFragmentManager(), "Username Game Info Dialog");
