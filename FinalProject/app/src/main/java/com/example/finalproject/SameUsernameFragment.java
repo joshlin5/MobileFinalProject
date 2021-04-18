@@ -25,13 +25,11 @@ public class SameUsernameFragment extends DialogFragment{
         void onSameDialogNegativeClick();
     }
 
+    // Callback listener
     SameUsernameFragmentListener listener;
-    EditText username;
-    TextView sameUsername, usernameTextView;
-    String name;
+    TextView sameUsername;
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
-    boolean sameUsernameBool = false;
 
     /**
      *
@@ -50,9 +48,13 @@ public class SameUsernameFragment extends DialogFragment{
         builder.setTitle("Game Instructions");
         // Telling Dialog which layout to use and to use the EditText
         View inflater = LayoutInflater.from(getContext()).inflate(R.layout.use_same_username_fragment, (ViewGroup) getView(), false);
+        // Initializing TextView
         sameUsername = inflater.findViewById(R.id.sameUsername);
+
         prefs = this.requireActivity().getSharedPreferences("myPrefs.xml", Context.MODE_PRIVATE);
-        editor = prefs.edit();
+        // Setting text for TextView
+        String username = prefs.getString("username", null);
+        sameUsername.setText("Do you want to use the same username " + username + "?");
 
 
         // Creating the "OK" and "Default" buttons
@@ -60,11 +62,11 @@ public class SameUsernameFragment extends DialogFragment{
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
+                        // Reset current points to 0
                         listener.onDialogPositiveClick();
-                        editor.putInt("points", 0);
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         listener.onSameDialogNegativeClick();
                     }

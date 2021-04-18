@@ -4,17 +4,157 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:background="@drawable/restroom"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/background"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:scaleType="fitXY"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+    <Button
+        android:id="@+id/highScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:text="High Score: 0"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="15sp"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/restroom2"/>
+        app:layout_constraintBottom_toTopOf="@id/hallway"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/currentScore"/>
 
+    <Button
+        android:id="@+id/currentScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:text="Current Score: 0"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        app:layout_constraintBaseline_toBaselineOf="@id/highScore"
+        app:layout_constraintLeft_toRightOf="@id/highScore"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <Button
+        android:id="@+id/hallway"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:text="Hallway"
+        android:background="@android:color/holo_blue_light"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="70sp"
+        app:backgroundTint="@null"
+        app:layout_constraintTop_toBottomOf="@id/highScore"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <Button
+        android:id="@+id/destination"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_green_light"
+        android:text="Go to Classroom"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        android:visibility="gone"
+        app:backgroundTint="@null"
+        android:backgroundTint="@color/teal_200"
+        app:layout_constraintTop_toBottomOf="@id/hallway"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <Button
+        android:id="@+id/question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:text="Question:"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:background="@android:color/holo_purple"
+        android:textSize="20sp"
+        app:backgroundTint="@null"
+        app:layout_constraintTop_toBottomOf="@id/hallway"
+        app:layout_constraintBottom_toTopOf="@id/questionText"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <Button
+        android:id="@+id/questionText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:text="You notice that your mask is slipping off your nose. What do you do?"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:background="@android:color/holo_purple"
+        android:textSize="15sp"
+        app:backgroundTint="@null"
+        app:layout_constraintTop_toBottomOf="@id/question"
+        app:layout_constraintBottom_toTopOf="@id/answer"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <Button
+        android:id="@+id/answer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_orange_dark"
+        android:clickable="false"
+        android:text="Answer Choices:"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:backgroundTint="@null"
+        app:layout_constraintTop_toBottomOf="@id/questionText"
+        app:layout_constraintBottom_toTopOf="@id/answer1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/answer1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_orange_dark"
+        android:text="Pull it back over your nose"
+        android:textColor="@android:color/black"
+        android:textSize="15sp"
+        android:visibility="visible"
+        app:backgroundTint="@null"
+        app:layout_constraintTop_toBottomOf="@id/answer"
+        app:layout_constraintBottom_toTopOf="@id/answer2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <Button
+        android:id="@+id/answer2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_orange_dark"
+        android:text="Ignore it"
+        android:textColor="@android:color/black"
+        android:textSize="15sp"
+        android:visibility="visible"
+        app:backgroundTint="@null"
+        app:layout_constraintTop_toBottomOf="@id/answer1"
+        app:layout_constraintBottom_toTopOf="@id/answer3"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <Button
+        android:id="@+id/answer3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_orange_dark"
+        android:text="Tell your friend and laugh about it"
+        android:textColor="@android:color/black"
+        android:textSize="15sp"
+        android:visibility="visible"
+        app:backgroundTint="@null"
+        app:layout_constraintTop_toBottomOf="@id/answer2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

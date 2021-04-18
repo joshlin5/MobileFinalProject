@@ -63,8 +63,11 @@ public class GameInfoDialog extends DialogFragment{
                         if (!name.equals("") && name.length() > 0) {
                             editor.putString("username", name);
                         }
+                        else {
+                            editor.putString("username", "Bob");
+                        }
                         listener.onDialogPositiveClick();
-                        editor.putInt("points", 0);
+                        editor.apply();
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
