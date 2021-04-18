@@ -24,9 +24,11 @@ public class GameInfoDialog extends DialogFragment{
         void onDialogPositiveClick();
     }
 
+    // Callback listener
     GameInfoDialogListener listener;
     EditText username;
     TextView usernameTextView;
+    // Username of player
     String name;
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
@@ -46,8 +48,9 @@ public class GameInfoDialog extends DialogFragment{
         // Making a new dialog using a fragment from target_points
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Game Instructions");
-        // Telling Dialog which layout to use and to use the EditText
+        // Telling Dialog which layout to use
         View inflater = LayoutInflater.from(getContext()).inflate(R.layout.username_fragment, (ViewGroup) getView(), false);
+        // Initializing
         username = inflater.findViewById(R.id.usernameEditText);
         usernameTextView = inflater.findViewById(R.id.usernameTextView);
         prefs = this.requireActivity().getSharedPreferences("myPrefs.xml", Context.MODE_PRIVATE);
@@ -59,20 +62,26 @@ public class GameInfoDialog extends DialogFragment{
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
+                        // Get name typed
                         name = username.getText().toString();
+                        // If they typed a name
                         if (!name.equals("") && name.length() > 0) {
+                            // Add name to shared preference file
                             editor.putString("username", name);
                         }
                         else {
+                            // If no name was typed then default to Bob
                             editor.putString("username", "Bob");
                         }
+                        // Callback for Ok button
                         listener.onDialogPositiveClick();
+                        // Applying changes to shared pref file
                         editor.apply();
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // Goes back to Starting Screen
+                        // Nothing happens and goes back to activity that called it
                     }
                 });
         return builder.create();

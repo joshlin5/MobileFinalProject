@@ -48,9 +48,8 @@ public class SameUsernameFragment extends DialogFragment{
         builder.setTitle("Game Instructions");
         // Telling Dialog which layout to use and to use the EditText
         View inflater = LayoutInflater.from(getContext()).inflate(R.layout.use_same_username_fragment, (ViewGroup) getView(), false);
-        // Initializing TextView
+        // Initializing
         sameUsername = inflater.findViewById(R.id.sameUsername);
-
         prefs = this.requireActivity().getSharedPreferences("myPrefs.xml", Context.MODE_PRIVATE);
         // Setting text for TextView
         String username = prefs.getString("username", null);
