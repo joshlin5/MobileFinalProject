@@ -99,7 +99,8 @@ public class MainActivity extends AppCompatActivity implements GameInfoDialog.Ga
                 return true;
 
             case R.id.weather:
-
+                Intent intent = new Intent(this, Weather.class);
+                startActivity(intent);
                 return true;
 
             default:
