@@ -19,7 +19,7 @@ public class Restroom extends AppCompatActivity implements CorrectDialog.correct
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.hallway);
+        setContentView(R.layout.restroom);
         // Initializing
         prefs = this.getSharedPreferences("myPrefs.xml", Context.MODE_PRIVATE);
         editor = prefs.edit();

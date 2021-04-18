@@ -44,9 +44,11 @@
 
         </activity>
         <activity
-            android:name=".Restroom"
+            android:name=".Restroom">
 
-            android:parentActivityName=".MainActivity">
+        </activity>
+        <activity
+            android:name=".Cafeteria">
 
         </activity>
         <activity android:name=".Weather"

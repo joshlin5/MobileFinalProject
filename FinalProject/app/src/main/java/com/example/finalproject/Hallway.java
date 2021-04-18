@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.OnLifecycleEvent;
 
 public class Hallway extends AppCompatActivity implements CorrectDialog.correctDialogListener{
 
@@ -22,17 +24,10 @@ public class Hallway extends AppCompatActivity implements CorrectDialog.correctD
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.hallway);
-        Intent mIntent = getIntent();
-        // Getting previous activity's name from Intent
-        previousActivity = mIntent.getStringExtra("previousActivity");
 
         // Initializing shared pref file and editor
         prefs = this.getSharedPreferences("myPrefs.xml", Context.MODE_PRIVATE);
         editor = prefs.edit();
-
-        // Getting high score and current score
-        highScore = prefs.getInt("highScore", -1);
-        currentScore = prefs.getInt("currentScore", -1);
 
         // Initializing buttons
         highScoreButton = findViewById(R.id.highScore);
@@ -44,6 +39,15 @@ public class Hallway extends AppCompatActivity implements CorrectDialog.correctD
         answer2 = findViewById(R.id.answer2);
         answer3 = findViewById(R.id.answer3);
         destination = findViewById(R.id.destination);
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        // Getting previous activity's name from Intent
+        Intent mIntent = getIntent();
+        previousActivity = mIntent.getStringExtra("previousActivity");
 
         // Setting all buttons to visible except the destination button
         question.setVisibility(View.VISIBLE);
@@ -54,7 +58,9 @@ public class Hallway extends AppCompatActivity implements CorrectDialog.correctD
         answer3.setVisibility(View.VISIBLE);
         destination.setVisibility(View.INVISIBLE);
 
-        // Setting high score and current score text
+        // Display high score and current score text
+        highScore = prefs.getInt("highScore", -1);
+        currentScore = prefs.getInt("currentScore", -1);
         highScoreButton.setText("High Score: " + highScore);
         currentScoreButton.setText("Current Score: " + currentScore);
 
@@ -206,5 +212,10 @@ public class Hallway extends AppCompatActivity implements CorrectDialog.correctD
         answer2.setVisibility(View.INVISIBLE);
         answer3.setVisibility(View.INVISIBLE);
         destination.setVisibility(View.VISIBLE);
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    public void rebuildActivity() {
+
     }
 }

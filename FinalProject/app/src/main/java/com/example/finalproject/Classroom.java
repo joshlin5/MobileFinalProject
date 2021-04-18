@@ -22,8 +22,8 @@ public class Classroom extends AppCompatActivity implements CorrectDialog.correc
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.classroom);
-        setRequestedOrientation(ActivityInfo
-                .SCREEN_ORIENTATION_LANDSCAPE);
+        //setRequestedOrientation(ActivityInfo
+          //      .SCREEN_ORIENTATION_LANDSCAPE);
         Intent mIntent = getIntent();
         // Initializing
         prefs = this.getSharedPreferences("myPrefs.xml", Context.MODE_PRIVATE);
@@ -79,7 +79,8 @@ public class Classroom extends AppCompatActivity implements CorrectDialog.correc
             dialog.show(getSupportFragmentManager(), "Wrong Answer/Game Over");
         });
         destination.setOnClickListener(v -> {
-            Intent intent = new Intent(this, Restroom.class);
+            Intent intent = new Intent(this, Hallway.class);
+            intent.putExtra("previousActivity", "classroom");
             startActivity(intent);
         });
 
