@@ -3,6 +3,8 @@ package com.example.finalproject;
 import android.Manifest;
 import android.annotation.SuppressLint;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -38,6 +40,7 @@ public class Weather extends AppCompatActivity  {
     private String desc;
     public String longitude = null;
     public String latitude = null;
+    public Intent x;
 
     private static final String TAG = "Weather";
 
@@ -49,14 +52,10 @@ public class Weather extends AppCompatActivity  {
                 public void onDataReceived(List<Weather> data) {
 
                     Weather tempp = data.get(0);
-                    if(tempp.desc.equals("clear sky"))
-                        background.setImageResource(R.drawable.school);
-
-                    else if(tempp.desc.equals("rain") || tempp.desc.equals("shower rain"))
-                        background.setBackgroundResource(R.drawable.rain);
-                    else
-                        background.setImageResource(R.drawable.schoolcloudy);
+                    x.putExtra("resource", tempp.desc);
+                    setResult(Activity.RESULT_OK,x);
                     Log.d(TAG,"success");
+                    finish();
                 }
 
                 @Override
@@ -70,25 +69,17 @@ public class Weather extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
           setContentView(R.layout.activity_main);
         background = findViewById(R.id.background);
+        x = new Intent();
          client =
                 LocationServices.getFusedLocationProviderClient(this);
         if (hasLocationPermission()) {
-            Toast toast = Toast.makeText(Weather.this, "going in",Toast.LENGTH_SHORT);
-            toast.show();
             findLocation();
         }
-
         if(longitude == null || latitude == null){
-            Toast toast = Toast.makeText(Weather.this, "Fuck!",Toast.LENGTH_SHORT);
-            toast.show();
-            longitude = "34.595583";
-            latitude = "-82.681513";
-
+            longitude = "0";
+            latitude = "0";
         }
 
-
-        mFetchData = new FetchData(this);
-        mFetchData.fetchforecast(mFetchListener,longitude,latitude);
     }
 
     public void SetDesc(String s) {
@@ -104,11 +95,11 @@ public class Weather extends AppCompatActivity  {
                         if(location != null) {
                             latitude = Double.toString(location.getLatitude());
                             longitude = Double.toString(location.getLongitude());
-                            // Toast toast = Toast.makeText(Weather.this, longitude,Toast.LENGTH_SHORT);
-                            //toast.show();
+                         //    Toast toast3 = Toast.makeText(Weather.this, longitude,Toast.LENGTH_SHORT);
+                           // toast3.show();
                             Log.d(TAG, "location = " + location);
-
-
+                            mFetchData = new FetchData(Weather.this);
+                            mFetchData.fetchforecast(mFetchListener,longitude,latitude);
                         }
                     }
                 });
@@ -121,13 +112,10 @@ public class Weather extends AppCompatActivity  {
             ActivityCompat.requestPermissions(this ,
                     new String[] { Manifest.permission.ACCESS_FINE_LOCATION },
                     REQUEST_LOCATION_PERMISSIONS);
-
             return false;
         }
-
         return true;
     }
-
     @SuppressLint("MissingPermission")
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -136,19 +124,8 @@ public class Weather extends AppCompatActivity  {
         // Find the location when permission is granted
         if (requestCode == REQUEST_LOCATION_PERMISSIONS) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                client.getLastLocation()
-                        .addOnSuccessListener(new OnSuccessListener<Location>() {
-                            @Override
-                            public void onSuccess(Location location) {
-                                latitude = Double.toString(location.getLatitude());
-                                longitude = Double.toString(location.getLongitude());
-
-
-                            }
-                        });
+                findLocation();
             }
         }
     }
-
-
 }

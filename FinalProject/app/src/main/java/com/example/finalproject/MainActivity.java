@@ -1,34 +1,29 @@
 package com.example.finalproject;
 
-import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements GameInfoDialog.GameInfoDialogListener, SameUsernameFragment.SameUsernameFragmentListener{
@@ -123,13 +118,15 @@ public class MainActivity extends AppCompatActivity implements GameInfoDialog.Ga
             case R.id.weather:
 
                 Intent intent = new Intent(this, Weather.class);
-                startActivity(intent);
+                startActivityForResult(intent,2);
+                // startActivity(intent);
                 return true;
-
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
     public void takePhotoClick() {
 
         Intent photoCaptureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -169,8 +166,21 @@ public class MainActivity extends AppCompatActivity implements GameInfoDialog.Ga
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
             displayPhoto();
 
+        }
+        if (requestCode == 2) {
+            if (resultCode == Activity.RESULT_OK) {
+                String resource = data.getStringExtra("resource");
+                if(resource.equals("clear sky"))
+                    mPhoto.setImageResource(R.drawable.school);
 
-           // mSaveButton.setEnabled(true);
+                else if(resource.contains("rain"))
+                    mPhoto.setImageResource(R.drawable.rain);
+                else if(resource.contains("cloud"))
+                    mPhoto.setImageResource(R.drawable.schoolcloudy);
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                Log.d("TAG", "Fail");
+            }
         }
     }
 
