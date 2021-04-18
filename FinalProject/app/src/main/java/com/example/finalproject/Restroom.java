@@ -57,10 +57,6 @@ public class Restroom extends AppCompatActivity implements CorrectDialog.correct
         // 3 is correct answer
         answer1.setOnClickListener(v -> {
             String wrongAnswer = "Wrong Answer! " + explanation;
-            currentScore += 1;
-            editor.putInt("currentScore", currentScore);
-            editor.apply();
-            currentScoreButton.setText("Current Score: " + currentScore);
             CorrectDialog dialog = new CorrectDialog(wrongAnswer, false);
             dialog.show(getSupportFragmentManager(), "Wrong Answer/Game Over");
         });
@@ -71,6 +67,10 @@ public class Restroom extends AppCompatActivity implements CorrectDialog.correct
         });
         answer3.setOnClickListener(v -> {
             String correctAnswer = "Correct Answer! " + explanation;
+            currentScore += 1;
+            editor.putInt("currentScore", currentScore);
+            editor.apply();
+            currentScoreButton.setText("Current Score: " + currentScore);
             CorrectDialog dialog = new CorrectDialog(correctAnswer, true);
             dialog.show(getSupportFragmentManager(), "Correct Answer");
         });

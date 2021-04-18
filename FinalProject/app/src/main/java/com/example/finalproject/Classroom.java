@@ -22,9 +22,6 @@ public class Classroom extends AppCompatActivity implements CorrectDialog.correc
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.classroom);
-        //setRequestedOrientation(ActivityInfo
-          //      .SCREEN_ORIENTATION_LANDSCAPE);
-        Intent mIntent = getIntent();
         // Initializing
         prefs = this.getSharedPreferences("myPrefs.xml", Context.MODE_PRIVATE);
         editor = prefs.edit();

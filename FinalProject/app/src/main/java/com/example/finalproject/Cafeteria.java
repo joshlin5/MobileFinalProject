@@ -19,10 +19,7 @@ public class Cafeteria extends AppCompatActivity implements CorrectDialog.correc
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.classroom);
-        //setRequestedOrientation(ActivityInfo
-          //      .SCREEN_ORIENTATION_LANDSCAPE);
-        Intent mIntent = getIntent();
+        setContentView(R.layout.cafeteria);
         // Initializing
         prefs = this.getSharedPreferences("myPrefs.xml", Context.MODE_PRIVATE);
         editor = prefs.edit();
