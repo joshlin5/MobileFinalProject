@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,11 +32,19 @@ public class Hallway extends AppCompatActivity implements correctDialog.correctD
         currentScoreButton = findViewById(R.id.currentScore);
         question = findViewById(R.id.question);
         questionText = findViewById(R.id.questionText);
-        answer = findViewById(R.id.highScore);
+        answer = findViewById(R.id.answer);
         answer1 = findViewById(R.id.answer1);
         answer2 = findViewById(R.id.answer2);
         answer3 = findViewById(R.id.answer3);
         destination = findViewById(R.id.destination);
+
+        question.setVisibility(View.VISIBLE);
+        questionText.setVisibility(View.VISIBLE);
+        answer.setVisibility(View.VISIBLE);
+        answer1.setVisibility(View.VISIBLE);
+        answer2.setVisibility(View.VISIBLE);
+        answer3.setVisibility(View.VISIBLE);
+        destination.setVisibility(View.INVISIBLE);
 
         highScoreButton.setText("High Score: " + highScore);
         currentScoreButton.setText("Current Score: " + currentScore);
@@ -75,7 +84,13 @@ public class Hallway extends AppCompatActivity implements correctDialog.correctD
 
     @Override
     public void onDialogPositiveClick() {
-
+        question.setVisibility(View.INVISIBLE);
+        questionText.setVisibility(View.INVISIBLE);
+        answer.setVisibility(View.INVISIBLE);
+        answer1.setVisibility(View.INVISIBLE);
+        answer2.setVisibility(View.INVISIBLE);
+        answer3.setVisibility(View.INVISIBLE);
+        destination.setVisibility(View.VISIBLE);
     }
 
     @Override

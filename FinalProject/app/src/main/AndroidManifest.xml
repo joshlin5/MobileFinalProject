@@ -30,11 +30,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Classroom"
+            android:name=".Classroom"/>
+        <activity
+            android:name=".Hallway"/>
 
-            android:parentActivityName=".MainActivity">
-
-        </activity>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
