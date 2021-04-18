@@ -16,6 +16,7 @@ public class Cafeteria extends AppCompatActivity implements CorrectDialog.correc
     String username;
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
+    public int questionCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +57,8 @@ public class Cafeteria extends AppCompatActivity implements CorrectDialog.correc
         usernameDisplay.setText("Username: " + username);
 
 
-        String explanation = "While inside you mask should always be on except when eating. If your mask is not on then you must keep at least 3ft from others. " +
-                "Even with your mask on you should try to keep distance from others";
+        String explanation = "While inside your mask should always be on except when eating." +
+                "You should clean your hands before eating, and maintain distance";
         // 1 is correct answer
         answer1.setOnClickListener(v -> {
             String correctAnswer = "Correct Answer! " + explanation;
@@ -65,6 +66,7 @@ public class Cafeteria extends AppCompatActivity implements CorrectDialog.correc
             editor.putInt("currentScore", currentScore);
             editor.apply();
             currentScoreButton.setText("Current Score: " + currentScore);
+            questionCount += 1;
             CorrectDialog dialog = new CorrectDialog(correctAnswer, true);
             dialog.show(getSupportFragmentManager(), "Correct Answer");
         });
@@ -87,17 +89,64 @@ public class Cafeteria extends AppCompatActivity implements CorrectDialog.correc
 
     @Override
     public void onDialogPositiveClick() {
-        question.setVisibility(View.INVISIBLE);
-        questionText.setVisibility(View.INVISIBLE);
-        answer.setVisibility(View.INVISIBLE);
-        answer1.setVisibility(View.INVISIBLE);
-        answer2.setVisibility(View.INVISIBLE);
-        answer3.setVisibility(View.INVISIBLE);
-        destination.setVisibility(View.VISIBLE);
+
+        highScore = prefs.getInt("highScore", -1);
+        currentScore = prefs.getInt("currentScore", -1);
+        highScoreButton.setText("High Score: " + highScore);
+        currentScoreButton.setText("Current Score: " + currentScore);
+
+        if(questionCount <= 1 ) {
+            question.setText("When you get in line  how much distance should you try to keep from others?");
+            answer1.setText("As long as we aren't touching, it should be fine");
+            answer2.setText("As far as possible. 6ft If possible");
+            answer3.setText("At least 3ft away with masks on, 6ft without masks.");
+
+
+            String explanation = "Social distancing states for schools, 3ft for social distancing is ok when masks are being used. "
+                    + "While eating or any other activity where you aren't wearing a mask increase to 6ft.";
+            // 1 is correct answer
+            answer3.setOnClickListener(v -> {
+                String correctAnswer = "Correct Answer! " + explanation;
+                currentScore += 1;
+                editor.putInt("currentScore", currentScore);
+                editor.apply();
+                questionCount += 1;
+                currentScoreButton.setText("Current Score: " + currentScore);
+                CorrectDialog dialog = new CorrectDialog(correctAnswer, true);
+                dialog.show(getSupportFragmentManager(), "Correct Answer");
+            });
+            answer2.setOnClickListener(v -> {
+                String wrongAnswer = "Wrong Answer! " + explanation;
+                CorrectDialog dialog = new CorrectDialog(wrongAnswer, false);
+                dialog.show(getSupportFragmentManager(), "Wrong Answer/Game Over");
+            });
+            answer1.setOnClickListener(v -> {
+                String wrongAnswer = "Wrong Answer! " + explanation;
+                CorrectDialog dialog = new CorrectDialog(wrongAnswer, false);
+                dialog.show(getSupportFragmentManager(), "Wrong Answer/Game Over");
+            });
+            destination.setOnClickListener(v -> {
+                //Intent intent = new Intent(this, Hallway.class);
+                //intent.putExtra("previousActivity", "classroom");
+                //startActivity(intent);
+            });
+        }
+        else {
+
+
+            question.setVisibility(View.INVISIBLE);
+            questionText.setVisibility(View.INVISIBLE);
+            answer.setVisibility(View.INVISIBLE);
+            answer1.setVisibility(View.INVISIBLE);
+            answer2.setVisibility(View.INVISIBLE);
+            answer3.setVisibility(View.INVISIBLE);
+            destination.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     public void onDialogNegativeClick() {
+        onDialogPositiveClick();
 
     }
 

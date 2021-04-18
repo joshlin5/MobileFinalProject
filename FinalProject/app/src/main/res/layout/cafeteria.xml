@@ -122,17 +122,17 @@
         android:textColor="@color/black"
         android:textSize="20sp"
         app:backgroundTint="@null"
-        app:layout_constraintTop_toBottomOf="@id/questionText"
         app:layout_constraintBottom_toTopOf="@id/answer1"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/questionText" />
 
     <Button
         android:id="@+id/answer1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/holo_orange_dark"
-        android:text="Use the handsanitizer by the line. Make sure to keep 3ft distance when you can"
+        android:text="Use the hand sanitizer by the line. "
         android:textColor="@android:color/black"
         android:textSize="15sp"
         android:visibility="visible"
@@ -147,7 +147,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/holo_orange_dark"
-        android:text="Use the handsanitizer by the line. Make sure to keep 6ft distance when you can "
+        android:text="Wipe your hands on your clothes, looks clean "
         android:textColor="@android:color/black"
         android:textSize="15sp"
         android:visibility="visible"
@@ -162,16 +162,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/holo_orange_dark"
-        android:text="Check that your mask is on, you can remove it while eating"
+        android:text="Go stand with your friend Bob in line, it's fine since you know him"
         android:textColor="@android:color/black"
         android:textSize="15sp"
         android:visibility="visible"
         app:backgroundTint="@null"
-        app:layout_constraintTop_toBottomOf="@id/answer2"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
-
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/answer2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

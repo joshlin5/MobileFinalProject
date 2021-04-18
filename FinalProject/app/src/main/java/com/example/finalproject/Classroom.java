@@ -16,6 +16,8 @@ public class Classroom extends AppCompatActivity implements CorrectDialog.correc
     Button highScoreButton, currentScoreButton, question, questionText, answer, answer1, answer2, answer3, destination, usernameDisplay;
     int highScore, currentScore;
     String username;
+    public int questionCount= 0;
+
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
 
@@ -58,7 +60,7 @@ public class Classroom extends AppCompatActivity implements CorrectDialog.correc
         usernameDisplay.setText("Username: " + username);
 
 
-        String explanation = "For now it is best to not share or come into contact with items others commonly touch(pencils, pens, masks, scarves " +
+        String explanation = "For now it is best to not share or come into contact with items others have commonly touched (pencils, pens, masks, scarves )" +
                 "Although for school standards you should ask your teacher to provide you with a clean pencil and sanitize if you can";
         // 1 is correct answer
         answer3.setOnClickListener(v -> {
@@ -67,6 +69,7 @@ public class Classroom extends AppCompatActivity implements CorrectDialog.correc
             editor.putInt("currentScore", currentScore);
             editor.apply();
             currentScoreButton.setText("Current Score: " + currentScore);
+            questionCount += 1;
             CorrectDialog dialog = new CorrectDialog(correctAnswer, true);
             dialog.show(getSupportFragmentManager(), "Correct Answer");
         });
@@ -90,13 +93,58 @@ public class Classroom extends AppCompatActivity implements CorrectDialog.correc
 
     @Override
     public void onDialogPositiveClick() {
-        question.setVisibility(View.INVISIBLE);
-        questionText.setVisibility(View.INVISIBLE);
-        answer.setVisibility(View.INVISIBLE);
-        answer1.setVisibility(View.INVISIBLE);
-        answer2.setVisibility(View.INVISIBLE);
-        answer3.setVisibility(View.INVISIBLE);
-        destination.setVisibility(View.VISIBLE);
+
+        highScore = prefs.getInt("highScore", -1);
+        currentScore = prefs.getInt("currentScore", -1);
+        highScoreButton.setText("High Score: " + highScore);
+        currentScoreButton.setText("Current Score: " + currentScore);
+        question.setText("Time to leave homeroom, Before you go is there something you should do?");
+        answer1.setText("Make sure I didn't leave anything and pick up any trash");
+        answer2.setText("Clean my desk off with wipes");
+        answer3.setText("Helicopter goes brrr");
+
+        if(questionCount <= 1 ) {
+
+            String explanation = "Regularly clean frequently touched surfaces. This includes desks. In most schools epa approved wipes should be available"
+                    +"You should bring your own wipes and sanitizer in case.";
+            // 1 is correct answer
+            answer2.setOnClickListener(v -> {
+                String correctAnswer = "Correct Answer! " + explanation;
+                currentScore += 1;
+                editor.putInt("currentScore", currentScore);
+                editor.apply();
+                questionCount += 1;
+                currentScoreButton.setText("Current Score: " + currentScore);
+                CorrectDialog dialog = new CorrectDialog(correctAnswer, true);
+                dialog.show(getSupportFragmentManager(), "Correct Answer");
+            });
+            answer1.setOnClickListener(v -> {
+                String wrongAnswer = "Wrong Answer! " + explanation;
+                CorrectDialog dialog = new CorrectDialog(wrongAnswer, false);
+                dialog.show(getSupportFragmentManager(), "Wrong Answer/Game Over");
+            });
+            answer3.setOnClickListener(v -> {
+                String wrongAnswer = "Wrong Answer! " + explanation;
+                CorrectDialog dialog = new CorrectDialog(wrongAnswer, false);
+                dialog.show(getSupportFragmentManager(), "Wrong Answer/Game Over");
+            });
+            destination.setOnClickListener(v -> {
+                //Intent intent = new Intent(this, Hallway.class);
+                //intent.putExtra("previousActivity", "classroom");
+                //startActivity(intent);
+            });
+        }
+        else {
+
+
+            question.setVisibility(View.INVISIBLE);
+            questionText.setVisibility(View.INVISIBLE);
+            answer.setVisibility(View.INVISIBLE);
+            answer1.setVisibility(View.INVISIBLE);
+            answer2.setVisibility(View.INVISIBLE);
+            answer3.setVisibility(View.INVISIBLE);
+            destination.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
