@@ -63,37 +63,45 @@ public class MainActivity extends AppCompatActivity implements GameInfoDialog.Ga
 
             // Check whether username is already in the pref file
             if(name != null) {
+                // Dialog asking user if they want to use the same username again
                 SameUsernameFragment dialog = new SameUsernameFragment();
                 dialog.show(getSupportFragmentManager(), "Username Game Info Dialog");
             }
             else {
+                // Dialog asking user for their username
                 GameInfoDialog dialog = new GameInfoDialog();
                 dialog.show(getSupportFragmentManager(), "Username Game Info Dialog");
             }
         });
+        // Initializing database
         mUserDb = UserDatabase.getInstance(getApplicationContext());
     }
 
 
 
+    // For both GameInfoDialog and SameUsernameFragment callback
     @Override
     public void onDialogPositiveClick() {
-        SharedPreferences prefs = this.getSharedPreferences("myPrefs.xml", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
+        // Get it again in case it changed since dialog popped up
         String username = prefs.getString("username", "ERROR");
 
+        // Check whether user is already in database or not
         int count = mUserDb.userDao().userCount(username);
         int highScore;
         if (count > 0) {
+            // If username is already in database, find the highest score
             highScore = mUserDb.userDao().highScore(username);
             editor.putInt("highScore", highScore);
         }
         else {
+            // Otherwise no previous score so set as 0
             editor.putInt("highScore", 0);
         }
+        // Current Score always starts at 0 at the start of a game
         editor.putInt("currentScore", 0);
         editor.apply();
 
+        // Start Hallway.class
         Intent intent = new Intent(this, Hallway.class);
         intent.putExtra("previousActivity", "main");
         startActivity(intent);
@@ -202,8 +210,11 @@ public class MainActivity extends AppCompatActivity implements GameInfoDialog.Ga
 
     }
 
+    // SameUsernameFragment callback
     @Override
     public void onSameDialogNegativeClick() {
+        // If they don't want to use the same username again
+        // Starts GameInfoDialog for setting new username
         GameInfoDialog dialog = new GameInfoDialog();
         dialog.show(getSupportFragmentManager(), "Username Game Info Dialog");
     }
