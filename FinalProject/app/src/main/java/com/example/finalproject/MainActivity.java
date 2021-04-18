@@ -70,10 +70,7 @@ public class MainActivity extends AppCompatActivity implements GameInfoDialog.Ga
         mUserDb = UserDatabase.getInstance(getApplicationContext());
     }
 
-    public void onClick(View view) {
-        Intent intent = new Intent(this, Weather.class);
-        startActivity(intent);
-    }
+
 
     @Override
     public void onDialogPositiveClick() {
@@ -140,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements GameInfoDialog.Ga
 
                 // Create content URI to grant camera app write permission to photoFile
                 Uri photoUri = FileProvider.getUriForFile(this,
-                        "com.example.finalproject",
+                        "com.example.finalproject.fileprovider",
                         mPhotoFile);
 
                 // Add content URI to intent

@@ -18,6 +18,7 @@ import androidx.core.content.ContextCompat;
 
 import com.android.volley.VolleyError;
 import android.location.Location;
+import android.widget.Toast;
 
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -72,10 +73,14 @@ public class Weather extends AppCompatActivity  {
          client =
                 LocationServices.getFusedLocationProviderClient(this);
         if (hasLocationPermission()) {
+            Toast toast = Toast.makeText(Weather.this, "going in",Toast.LENGTH_SHORT);
+            toast.show();
             findLocation();
         }
 
         if(longitude == null || latitude == null){
+            Toast toast = Toast.makeText(Weather.this, "Fuck!",Toast.LENGTH_SHORT);
+            toast.show();
             longitude = "34.595583";
             latitude = "-82.681513";
 
@@ -99,7 +104,10 @@ public class Weather extends AppCompatActivity  {
                         if(location != null) {
                             latitude = Double.toString(location.getLatitude());
                             longitude = Double.toString(location.getLongitude());
+                            // Toast toast = Toast.makeText(Weather.this, longitude,Toast.LENGTH_SHORT);
+                            //toast.show();
                             Log.d(TAG, "location = " + location);
+
 
                         }
                     }
