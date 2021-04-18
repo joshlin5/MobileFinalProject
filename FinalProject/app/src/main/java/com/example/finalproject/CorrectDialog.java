@@ -18,7 +18,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
-public class correctDialog extends DialogFragment {
+public class CorrectDialog extends DialogFragment {
 
     public interface correctDialogListener {
         // Callback for "OK" button
@@ -34,7 +34,7 @@ public class correctDialog extends DialogFragment {
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
 
-    public correctDialog(String dialog, boolean correctInput) {
+    public CorrectDialog(String dialog, boolean correctInput) {
         textViewDialog = dialog;
         correct = correctInput;
     }

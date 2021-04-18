@@ -33,14 +33,15 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements GameInfoDialog.GameInfoDialogListener, SameUsernameFragment.SameUsernameFragmentListener{
 
+    // Database
     private UserDatabase mUserDb;
     private final int REQUEST_TAKE_PHOTO = 1;
     private Menu mMenu;
-
-    private UserDao userDao;
+    // Start button
     Button startButton;
     private ImageView mPhoto;
     private File mPhotoFile;
+    // Shared pref file and editor
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
 
@@ -52,15 +53,20 @@ public class MainActivity extends AppCompatActivity implements GameInfoDialog.Ga
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Initializing shared pref file and editor
         prefs = this.getSharedPreferences("myPrefs.xml", Context.MODE_PRIVATE);
         editor = prefs.edit();
+
         mPhoto = findViewById(R.id.background);
+        // Initializing start button and setting onClick listener
         startButton = findViewById(R.id.startButton);
         startButton.setOnClickListener(v -> {
             String name = prefs.getString("username", null);
 
             if(name != null) {
-
+                SameUsernameFragment dialog = new SameUsernameFragment();
+                dialog.show(getSupportFragmentManager(), "Username Game Info Dialog");
             }
             else {
                 GameInfoDialog dialog = new GameInfoDialog();
