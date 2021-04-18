@@ -81,9 +81,7 @@ public class Cafeteria extends AppCompatActivity implements CorrectDialog.correc
             dialog.show(getSupportFragmentManager(), "Wrong Answer/Game Over");
         });
         destination.setOnClickListener(v -> {
-            //Intent intent = new Intent(this, Hallway.class);
-            //intent.putExtra("previousActivity", "classroom");
-            //startActivity(intent);
+
         });
     }
 
@@ -126,14 +124,12 @@ public class Cafeteria extends AppCompatActivity implements CorrectDialog.correc
                 dialog.show(getSupportFragmentManager(), "Wrong Answer/Game Over");
             });
             destination.setOnClickListener(v -> {
-                //Intent intent = new Intent(this, Hallway.class);
-                //intent.putExtra("previousActivity", "classroom");
-                //startActivity(intent);
+
             });
         }
         else {
 
-
+            //Set visibility for the next question, or if the view is finished display the button to move on
             question.setVisibility(View.INVISIBLE);
             questionText.setVisibility(View.INVISIBLE);
             answer.setVisibility(View.INVISIBLE);
@@ -145,6 +141,7 @@ public class Cafeteria extends AppCompatActivity implements CorrectDialog.correc
     }
 
     @Override
+    //Same as onPositive. If ok or cancel are clicked the same thing will occur
     public void onDialogNegativeClick() {
         onDialogPositiveClick();
 

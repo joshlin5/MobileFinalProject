@@ -129,9 +129,9 @@ public class Classroom extends AppCompatActivity implements CorrectDialog.correc
                 dialog.show(getSupportFragmentManager(), "Wrong Answer/Game Over");
             });
             destination.setOnClickListener(v -> {
-                //Intent intent = new Intent(this, Hallway.class);
-                //intent.putExtra("previousActivity", "classroom");
-                //startActivity(intent);
+                Intent intent = new Intent(this, Hallway.class);
+                intent.putExtra("previousActivity", "classroom");
+                startActivity(intent);
             });
         }
         else {
@@ -149,6 +149,7 @@ public class Classroom extends AppCompatActivity implements CorrectDialog.correc
 
     @Override
     public void onDialogNegativeClick() {
+        onDialogPositiveClick();
 
     }
 

@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements GameInfoDialog.Ga
     private final int REQUEST_TAKE_PHOTO = 1;
     private Menu mMenu;
     // Start button
-    Button startButton;
+    Button startButton, photo, weather;
     private ImageView mPhoto;
     private File mPhotoFile;
     // Shared pref file and editor
@@ -54,6 +54,8 @@ public class MainActivity extends AppCompatActivity implements GameInfoDialog.Ga
         mPhoto = findViewById(R.id.background);
         // Initializing start button and setting onClick listener
         startButton = findViewById(R.id.startButton);
+        photo.findViewById(R.id.take_photo);
+        weather.findViewById(R.id.WeatherB);
         startButton.setOnClickListener(v -> {
             // Username from shared pref file
             String name = prefs.getString("username", null);
@@ -69,6 +71,16 @@ public class MainActivity extends AppCompatActivity implements GameInfoDialog.Ga
                 GameInfoDialog dialog = new GameInfoDialog();
                 dialog.show(getSupportFragmentManager(), "Username Game Info Dialog");
             }
+        });
+
+        weather.setOnClickListener(v -> {
+            //Start activity to get location and weather to update view
+            Intent intent = new Intent(this, Weather.class);
+            startActivityForResult(intent,2);
+        });
+        photo.setOnClickListener(v -> {
+            //Start camera app to take photo
+            takePhotoClick();
         });
         // Initializing database
         mUserDb = UserDatabase.getInstance(getApplicationContext());
@@ -104,31 +116,6 @@ public class MainActivity extends AppCompatActivity implements GameInfoDialog.Ga
         startActivity(intent);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.appbar_menu, menu);
-        mMenu = menu;
-        return super.onCreateOptionsMenu(menu);
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.Photo:
-                takePhotoClick();
-                return true;
-
-            case R.id.weather:
-
-                Intent intent = new Intent(this, Weather.class);
-                startActivityForResult(intent,2);
-                // startActivity(intent);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-
     public void takePhotoClick() {
 
         Intent photoCaptureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -160,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements GameInfoDialog.Ga
             }
         }
     }
-
+    //Will handle activities that are returning data
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -169,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements GameInfoDialog.Ga
             displayPhoto();
 
         }
+        //RequestCode: 2 is for the weather activity
         if (requestCode == 2) {
             if (resultCode == Activity.RESULT_OK) {
                 String resource = data.getStringExtra("resource");

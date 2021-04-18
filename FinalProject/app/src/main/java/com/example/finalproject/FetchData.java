@@ -30,11 +30,9 @@ public class FetchData extends Application {
 
 
 
-
+    //function
     public interface OnWeatherReceivedListener {
         void onDataReceived(List<Weather> data);
-
-
         void onErrorResponse(VolleyError error);
     }
     public FetchData(Context context){
