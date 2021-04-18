@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements GameInfoDialog.Ga
     private final int REQUEST_TAKE_PHOTO = 1;
     private Menu mMenu;
     // Start button
-    Button startButton, photo, weather;
+    Button startButton, photo, weather, about;
     private ImageView mPhoto;
     private File mPhotoFile;
     // Shared pref file and editor
@@ -54,8 +54,9 @@ public class MainActivity extends AppCompatActivity implements GameInfoDialog.Ga
         mPhoto = findViewById(R.id.background);
         // Initializing start button and setting onClick listener
         startButton = findViewById(R.id.startButton);
-        photo.findViewById(R.id.take_photo);
-        weather.findViewById(R.id.WeatherB);
+        photo = findViewById(R.id.take_photo);
+        weather = findViewById(R.id.WeatherB);
+        about = findViewById(R.id.aboutButton);
         startButton.setOnClickListener(v -> {
             // Username from shared pref file
             String name = prefs.getString("username", null);
@@ -72,7 +73,11 @@ public class MainActivity extends AppCompatActivity implements GameInfoDialog.Ga
                 dialog.show(getSupportFragmentManager(), "Username Game Info Dialog");
             }
         });
-
+        about.setOnClickListener(v -> {
+            //Start activity to get location and weather to update view
+            Intent intent = new Intent(this, About.class);
+            startActivity(intent);
+        });
         weather.setOnClickListener(v -> {
             //Start activity to get location and weather to update view
             Intent intent = new Intent(this, Weather.class);

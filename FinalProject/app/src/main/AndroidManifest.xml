@@ -40,8 +40,8 @@
 
         </activity>
         <activity
-            android:name=".About">
-
+            android:name=".About"
+            android:parentActivityName=".MainActivity">
         </activity>
         <activity
             android:name=".Restroom">
