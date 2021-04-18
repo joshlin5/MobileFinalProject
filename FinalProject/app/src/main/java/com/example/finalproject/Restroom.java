@@ -80,11 +80,11 @@ public class Restroom extends AppCompatActivity implements CorrectDialog.correct
             intent.putExtra("previousActivity", "restroom");
             startActivity(intent);
         });
-
     }
 
     @Override
     public void onDialogPositiveClick() {
+        // After the dialog disappears, turn everything invisible and just display the next destination button
         question.setVisibility(View.INVISIBLE);
         questionText.setVisibility(View.INVISIBLE);
         answer.setVisibility(View.INVISIBLE);
@@ -96,6 +96,13 @@ public class Restroom extends AppCompatActivity implements CorrectDialog.correct
 
     @Override
     public void onDialogNegativeClick() {
-
+        // After the dialog disappears, turn everything invisible and just display the next destination button
+        question.setVisibility(View.INVISIBLE);
+        questionText.setVisibility(View.INVISIBLE);
+        answer.setVisibility(View.INVISIBLE);
+        answer1.setVisibility(View.INVISIBLE);
+        answer2.setVisibility(View.INVISIBLE);
+        answer3.setVisibility(View.INVISIBLE);
+        destination.setVisibility(View.VISIBLE);
     }
 }
