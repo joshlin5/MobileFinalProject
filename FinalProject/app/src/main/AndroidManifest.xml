@@ -37,6 +37,18 @@
             android:parentActivityName=".MainActivity">
 
         </activity>
+        <activity
+            android:name=".Hallway"
+
+            android:parentActivityName=".MainActivity">
+
+        </activity>
+        <activity
+            android:name=".Restroom"
+
+            android:parentActivityName=".MainActivity">
+
+        </activity>
         <activity android:name=".Weather"
             >
         </activity>
