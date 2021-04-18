@@ -6,6 +6,7 @@ package com.example.finalproject;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,19 +18,26 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
-public class GameInfoDialog extends DialogFragment{
+public class correctDialog extends DialogFragment {
 
-    public interface GameInfoDialogListener {
+    public interface correctDialogListener {
         // Callback for "OK" button
         void onDialogPositiveClick();
+        void onDialogNegativeClick();
     }
 
-    GameInfoDialogListener listener;
-    EditText username;
-    TextView usernameTextView;
-    String name;
+    UserDatabase mUserDb;
+    TextView text;
+    correctDialogListener listener;
+    String textViewDialog;
+    boolean correct;
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
+
+    public correctDialog(String dialog, boolean correctInput) {
+        textViewDialog = dialog;
+        correct = correctInput;
+    }
 
     /**
      *
@@ -45,31 +53,40 @@ public class GameInfoDialog extends DialogFragment{
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Making a new dialog using a fragment from target_points
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Game Instructions");
         // Telling Dialog which layout to use and to use the EditText
-        View inflater = LayoutInflater.from(getContext()).inflate(R.layout.username_fragment, (ViewGroup) getView(), false);
-        username = inflater.findViewById(R.id.usernameEditText);
-        usernameTextView = inflater.findViewById(R.id.usernameTextView);
-        prefs = this.requireActivity().getSharedPreferences("myPrefs.xml", Context.MODE_PRIVATE);
+        View inflater = LayoutInflater.from(getContext()).inflate(R.layout.generic_dialog_fragment, (ViewGroup) getView(), false);
+        mUserDb = UserDatabase.getInstance(getActivity().getApplicationContext());
+        prefs = getContext().getSharedPreferences("myPrefs.xml", Context.MODE_PRIVATE);
         editor = prefs.edit();
-
+        if (correct) {
+            builder.setTitle("Correct!");
+        }
+        else {
+            builder.setTitle("Game Over.");
+            User user = new User(prefs.getString("username", "ERROR"), prefs.getInt("currentScore", -1));
+            mUserDb.userDao().insertUser(user);
+        }
+        text = inflater.findViewById(R.id.text);
+        text.setText(textViewDialog);
 
         // Creating the "OK" and "Default" buttons
         builder.setView(inflater)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        name = username.getText().toString();
-                        if (!name.equals("") && name.length() > 0) {
-                            editor.putString("username", name);
-                        }
                         listener.onDialogPositiveClick();
-                        editor.putInt("points", 0);
+                        if(!correct) {
+                            Intent intent = new Intent(getActivity(), MainActivity.class);
+                            startActivity(intent);
+                        }
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // Goes back to Starting Screen
+                        listener.onDialogNegativeClick();
+                        if(!correct) {
+                            Intent intent = new Intent(getActivity(), MainActivity.class);
+                            startActivity(intent);
+                        }
                     }
                 });
         return builder.create();
@@ -87,6 +104,6 @@ public class GameInfoDialog extends DialogFragment{
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        listener = (GameInfoDialogListener) context;
+        listener = (correctDialogListener) context;
     }
 }
