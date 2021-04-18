@@ -32,15 +32,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Classroom"
-
-            android:parentActivityName=".MainActivity">
+            android:name=".Classroom">
 
         </activity>
         <activity
-            android:name=".Hallway"
+            android:name=".Hallway">
 
-            android:parentActivityName=".MainActivity">
+        </activity>
+        <activity
+            android:name=".About">
 
         </activity>
         <activity

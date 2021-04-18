@@ -83,7 +83,6 @@ public class Cafeteria extends AppCompatActivity implements CorrectDialog.correc
             //intent.putExtra("previousActivity", "classroom");
             //startActivity(intent);
         });
-
     }
 
     @Override

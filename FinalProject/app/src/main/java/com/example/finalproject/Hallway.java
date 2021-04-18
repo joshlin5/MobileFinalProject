@@ -152,18 +152,18 @@ public class Hallway extends AppCompatActivity implements CorrectDialog.correctD
         // If previous activity was Restroom.java
         else if(previousActivity.equals("restroom")) {
             // Setting question, answer, and destination text
-            questionText.setText("You are about to cough but you do not have a mask on. What do you do?");
-            answer1.setText("Cough as loud as you can so everyone knows you coughed");
-            answer2.setText("Cover your mouth with your hands and cough");
-            answer3.setText("Cover your mouth with your elbow and cough");
+            questionText.setText("You are standing in line with your mask on about to go to the Cafeteria. How far away should you stand from you other classmate?");
+            answer1.setText("3 feet away");
+            answer2.setText("6 feet away");
+            answer3.setText("You see your friends, so you go stand close to them so you can talk with them");
             destination.setText("Go to Cafeteria");
 
             // Explanation after they choose an answer
-            String explanation = "When coughing, make sure to cough into your elbow and wash your hands and elbows as soon as possible after. " +
-                    "It's best not to cough into your hands because you could easily touch something else with you hands and transfer the germs.";
+            String explanation = "When you have your masks on at school, make sure to stand three feet away from other students to stay safe from COVID-19," +
+                    " even if they are you friends and you do not think they have COVID.";
 
-            // 3 is correct answer
-            answer1.setOnClickListener(v -> {
+            // 1 is correct answer
+            answer3.setOnClickListener(v -> {
                 // Displays wrong answer and game over
                 String wrongAnswer = "Wrong Answer! " + explanation;
                 CorrectDialog dialog = new CorrectDialog(wrongAnswer, false);
@@ -175,7 +175,7 @@ public class Hallway extends AppCompatActivity implements CorrectDialog.correctD
                 CorrectDialog dialog = new CorrectDialog(correctAnswer, false);
                 dialog.show(getSupportFragmentManager(), "Wrong Answer/Game Over");
             });
-            answer3.setOnClickListener(v -> {
+            answer1.setOnClickListener(v -> {
                 // Updates correct answer and gives explanation
                 String wrongAnswer = "Correct Answer! " + explanation;
                 currentScore += 1;
