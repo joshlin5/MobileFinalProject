@@ -1,25 +1,37 @@
 package com.example.finalproject;
 
 import android.Manifest;
-import android.content.Context;
+import android.annotation.SuppressLint;
+
 import android.content.pm.PackageManager;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
+
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.android.volley.VolleyError;
+import android.location.Location;
+
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+
 
 import java.util.List;
 
-public class Weather extends AppCompatActivity {
+public class Weather extends AppCompatActivity  {
     private FetchData mFetchData;
+    private final int REQUEST_LOCATION_PERMISSIONS = 0;
     private LocationManager locManager = null;
+    public FusedLocationProviderClient client;
     private LocationListener locListener = null;
     ImageView background;
     private String desc;
@@ -32,23 +44,17 @@ public class Weather extends AppCompatActivity {
 
     private FetchData.OnWeatherReceivedListener mFetchListener =
             new FetchData.OnWeatherReceivedListener(){
-
-
-                @Override
+            @Override
                 public void onDataReceived(List<Weather> data) {
 
                     Weather tempp = data.get(0);
-
-
                     if(tempp.desc.equals("clear sky"))
                         background.setImageResource(R.drawable.school);
 
-                    if(tempp.desc.equals("rain") || tempp.desc.equals("shower rain"))
-                        background.setImageResource(R.drawable.rain);
-
+                    else if(tempp.desc.equals("rain") || tempp.desc.equals("shower rain"))
+                        background.setBackgroundResource(R.drawable.rain);
                     else
                         background.setImageResource(R.drawable.schoolcloudy);
-
                     Log.d(TAG,"success");
                 }
 
@@ -56,49 +62,84 @@ public class Weather extends AppCompatActivity {
                 public void onErrorResponse(VolleyError error) {
                     Log.d(TAG,"error");
                 }
-
-
             };
+    @SuppressLint("MissingPermission")
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // setContentView(R.layout.weather);
-        locManager = (LocationManager)
-                getSystemService(Context.LOCATION_SERVICE);
 
-        locListener = new Location();
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+        super.onCreate(savedInstanceState);
+          setContentView(R.layout.activity_main);
+        background = findViewById(R.id.background);
+         client =
+                LocationServices.getFusedLocationProviderClient(this);
+        if (hasLocationPermission()) {
+            findLocation();
+        }
+
+        if(longitude == null || latitude == null){
+            longitude = "34.595583";
+            latitude = "-82.681513";
 
         }
-        locManager.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER, 5000, 10, locListener);
+
 
         mFetchData = new FetchData(this);
-
-
         mFetchData.fetchforecast(mFetchListener,longitude,latitude);
-
-
-    }
-    public void setLongitude(double s) {
-       // longitude = Double.toString(s);
-        longitude = "-82.8595922";
-
     }
 
-    public void setLatitude(double s) {
-       // latitude = Double.toString(s);
-        latitude = "34.6556779";
-
-    }
     public void SetDesc(String s) {
         desc = s;
+    }
+
+    @SuppressLint("MissingPermission")
+    private void findLocation() {
+        client.getLastLocation()
+                .addOnSuccessListener(this,new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        if(location != null) {
+                            latitude = Double.toString(location.getLatitude());
+                            longitude = Double.toString(location.getLongitude());
+                            Log.d(TAG, "location = " + location);
+
+                        }
+                    }
+                });
+    }
+    private boolean hasLocationPermission() {
+        // Request fine location permission if not already granted
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this ,
+                    new String[] { Manifest.permission.ACCESS_FINE_LOCATION },
+                    REQUEST_LOCATION_PERMISSIONS);
+
+            return false;
+        }
+
+        return true;
+    }
+
+    @SuppressLint("MissingPermission")
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        // Find the location when permission is granted
+        if (requestCode == REQUEST_LOCATION_PERMISSIONS) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                client.getLastLocation()
+                        .addOnSuccessListener(new OnSuccessListener<Location>() {
+                            @Override
+                            public void onSuccess(Location location) {
+                                latitude = Double.toString(location.getLatitude());
+                                longitude = Double.toString(location.getLongitude());
+
+
+                            }
+                        });
+            }
+        }
     }
 
 

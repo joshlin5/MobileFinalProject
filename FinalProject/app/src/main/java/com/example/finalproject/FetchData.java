@@ -39,6 +39,7 @@ public class FetchData extends Application {
     }
     public FetchData(Context context){
         mRequestQueue = Volley.newRequestQueue(context);
+
     }
 
 
@@ -87,7 +88,7 @@ public class FetchData extends Application {
             JSONObject subjectObj = weatherArray.getJSONObject(0);
 
             field.SetDesc(subjectObj.getString("description"));
-
+            data.add(field);
 
 
         }
