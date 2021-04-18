@@ -14,8 +14,8 @@ import androidx.lifecycle.OnLifecycleEvent;
 public class Hallway extends AppCompatActivity implements CorrectDialog.correctDialogListener{
 
     // Previous activity's name, determines question shown
-    String previousActivity;
-    Button highScoreButton, currentScoreButton, question, questionText, answer, answer1, answer2, answer3, destination;
+    String previousActivity, username;
+    Button highScoreButton, currentScoreButton, question, questionText, answer, answer1, answer2, answer3, destination, usernameDisplay;
     int highScore, currentScore;
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
@@ -39,6 +39,7 @@ public class Hallway extends AppCompatActivity implements CorrectDialog.correctD
         answer2 = findViewById(R.id.answer2);
         answer3 = findViewById(R.id.answer3);
         destination = findViewById(R.id.destination);
+        usernameDisplay = findViewById(R.id.usernameDisplay);
     }
 
     @Override
@@ -63,6 +64,9 @@ public class Hallway extends AppCompatActivity implements CorrectDialog.correctD
         currentScore = prefs.getInt("currentScore", -1);
         highScoreButton.setText("High Score: " + highScore);
         currentScoreButton.setText("Current Score: " + currentScore);
+
+        username = prefs.getString("username", "ERROR");
+        usernameDisplay.setText("Username: " + username);
 
         // If previous activity was MainActivity.java
         if(previousActivity.equals("main")) {
@@ -205,17 +209,6 @@ public class Hallway extends AppCompatActivity implements CorrectDialog.correctD
     @Override
     public void onDialogNegativeClick() {
         // After the dialog disappears, turn everything invisible and just display the next destination button
-        question.setVisibility(View.INVISIBLE);
-        questionText.setVisibility(View.INVISIBLE);
-        answer.setVisibility(View.INVISIBLE);
-        answer1.setVisibility(View.INVISIBLE);
-        answer2.setVisibility(View.INVISIBLE);
-        answer3.setVisibility(View.INVISIBLE);
-        destination.setVisibility(View.VISIBLE);
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    public void rebuildActivity() {
-
+        onDialogPositiveClick();
     }
 }

@@ -11,8 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class Restroom extends AppCompatActivity implements CorrectDialog.correctDialogListener{
 
-    Button highScoreButton, currentScoreButton, question, questionText, answer, answer1, answer2, answer3, destination;
+    Button highScoreButton, currentScoreButton, question, questionText, answer, answer1, answer2, answer3, destination, usernameDisplay;
     int highScore, currentScore;
+    String username;
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
 
@@ -34,6 +35,7 @@ public class Restroom extends AppCompatActivity implements CorrectDialog.correct
         answer2 = findViewById(R.id.answer2);
         answer3 = findViewById(R.id.answer3);
         destination = findViewById(R.id.destination);
+        usernameDisplay = findViewById(R.id.usernameDisplay);
 
         // Setting correct visibility
         question.setVisibility(View.VISIBLE);
@@ -49,6 +51,9 @@ public class Restroom extends AppCompatActivity implements CorrectDialog.correct
         currentScore = prefs.getInt("currentScore", -1);
         highScoreButton.setText("High Score: " + highScore);
         currentScoreButton.setText("Current Score: " + currentScore);
+
+        username = prefs.getString("username", "ERROR");
+        usernameDisplay.setText("Username: " + username);
 
         // Explanation of correct answer
         String explanation = "You should always wash your hands after using the restroom. " +
@@ -97,12 +102,6 @@ public class Restroom extends AppCompatActivity implements CorrectDialog.correct
     @Override
     public void onDialogNegativeClick() {
         // After the dialog disappears, turn everything invisible and just display the next destination button
-        question.setVisibility(View.INVISIBLE);
-        questionText.setVisibility(View.INVISIBLE);
-        answer.setVisibility(View.INVISIBLE);
-        answer1.setVisibility(View.INVISIBLE);
-        answer2.setVisibility(View.INVISIBLE);
-        answer3.setVisibility(View.INVISIBLE);
-        destination.setVisibility(View.VISIBLE);
+        onDialogPositiveClick();
     }
 }

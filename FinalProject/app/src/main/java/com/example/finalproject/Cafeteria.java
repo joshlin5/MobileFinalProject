@@ -11,8 +11,9 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Cafeteria extends AppCompatActivity implements CorrectDialog.correctDialogListener  {
-    Button highScoreButton, currentScoreButton, question, questionText, answer, answer1, answer2, answer3, destination;
+    Button highScoreButton, currentScoreButton, question, questionText, answer, answer1, answer2, answer3, destination, usernameDisplay;
     int highScore, currentScore;
+    String username;
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
 
@@ -34,6 +35,7 @@ public class Cafeteria extends AppCompatActivity implements CorrectDialog.correc
         answer2 = findViewById(R.id.answer2);
         answer3 = findViewById(R.id.answer3);
         destination = findViewById(R.id.destination);
+        usernameDisplay = findViewById(R.id.usernameDisplay);
 
         // Setting correct visibility
         question.setVisibility(View.VISIBLE);
@@ -49,6 +51,9 @@ public class Cafeteria extends AppCompatActivity implements CorrectDialog.correc
         currentScore = prefs.getInt("currentScore", -1);
         highScoreButton.setText("High Score: " + highScore);
         currentScoreButton.setText("Current Score: " + currentScore);
+
+        username = prefs.getString("username", "ERROR");
+        usernameDisplay.setText("Username: " + username);
 
 
         String explanation = "While inside you mask should always be on except when eating. If your mask is not on then you must keep at least 3ft from others. " +
