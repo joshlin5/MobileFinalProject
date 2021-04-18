@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -216,8 +217,11 @@ public class MainActivity extends AppCompatActivity implements GameInfoDialog.Ga
         bmOptions.inPurgeable = true;
         Bitmap bitmap = BitmapFactory.decodeFile(mPhotoFile.getAbsolutePath(), bmOptions);
 
+        Matrix matrix = new Matrix();
+        matrix.postRotate(90);
+        Bitmap bitmap1 = Bitmap.createBitmap(bitmap,0,0,targetW, targetH,matrix,true);
         // Display smaller bitmap
-        mPhoto.setImageBitmap(bitmap);
+        mPhoto.setImageBitmap(bitmap1);
 
     }
 
