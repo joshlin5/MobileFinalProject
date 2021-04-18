@@ -3,6 +3,7 @@ package com.example.finalproject;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -55,23 +56,6 @@ public class MainActivity extends AppCompatActivity implements GameInfoDialog.Ga
             dialog.show(getSupportFragmentManager(), "Username Game Info Dialog");
         });
         mUserDb = UserDatabase.getInstance(getApplicationContext());
-        UserDao userDao = mUserDb.userDao();
-    }
-
-    public List<String> getAllUsers() {
-        return userDao.getAllUsers();
-    }
-
-    public int getHighScore(String username) {
-        return userDao.highScore(username);
-    }
-
-    public List<Integer> getAllScores(String username) {
-        return userDao.getAllScores(username);
-    }
-
-    public void insertUser(User user) {
-        userDao.insertUser(user);
     }
 
     public void onClick(View view) {
@@ -81,8 +65,24 @@ public class MainActivity extends AppCompatActivity implements GameInfoDialog.Ga
 
     @Override
     public void onDialogPositiveClick() {
+        SharedPreferences prefs = this.getSharedPreferences("myPrefs.xml", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        String username = prefs.getString("username", "ERROR");
+
+        int count = mUserDb.userDao().userCount(username);
+        int highScore;
+        if (count > 0) {
+            highScore = mUserDb.userDao().highScore(username);
+            editor.putInt("highScore", highScore);
+        }
+        else {
+            editor.putInt("highScore", 0);
+        }
+        editor.putInt("currentScore", 0);
+        editor.apply();
+
         Intent intent = new Intent(this, Hallway.class);
-        intent.putExtra("previousActivity", "Main");
+        intent.putExtra("previousActivity", "main");
         startActivity(intent);
     }
     @Override
