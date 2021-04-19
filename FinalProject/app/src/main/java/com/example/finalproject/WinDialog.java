@@ -37,6 +37,7 @@ public class WinDialog extends DialogFragment {
         textViewDialog = dialog;
 
     }
+
     /**
      *
      * @param savedInstanceState State of application to save
@@ -61,6 +62,8 @@ public class WinDialog extends DialogFragment {
         // Sets the title to either correct or game over depending on boolean correct
 
         builder.setTitle("Finished!");
+        User user = new User(prefs.getString("username", "ERROR"), prefs.getInt("currentScore", -1));
+        mUserDb.userDao().insertUser(user);
         // Display dialog given in constructor
         text = inflater.findViewById(R.id.text);
         text.setText(textViewDialog);

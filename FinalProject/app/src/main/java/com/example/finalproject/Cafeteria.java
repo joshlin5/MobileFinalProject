@@ -94,7 +94,7 @@ public class Cafeteria extends AppCompatActivity implements CorrectDialog.correc
         currentScoreButton.setText("Current Score: " + currentScore);
 
         if(questionCount <= 1 ) {
-            question.setText("When you get in line  how much distance should you try to keep from others?");
+            questionText.setText("When you get in line  how much distance should you try to keep from others?");
             answer1.setText("As long as we aren't touching, it should be fine");
             answer2.setText("As far as possible. 6ft If possible");
             answer3.setText("At least 3ft away with masks on, 6ft without masks.");
