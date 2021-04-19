@@ -101,7 +101,7 @@ public class Classroom extends AppCompatActivity implements CorrectDialog.correc
         question.setText("Time to leave homeroom, Before you go is there something you should do?");
         answer1.setText("Make sure I didn't leave anything and pick up any trash");
         answer2.setText("Clean my desk off with wipes");
-        answer3.setText("Helicopter goes brrr");
+        answer3.setText("Write a note on the desk");
 
         if(questionCount <= 1 ) {
 
