@@ -1,5 +1,6 @@
 # MobileFinalProject
 Joshua Lin C15684772 jlin5@g.clemson.edu
+Adrian Searles C10055103 asearle@g.clemson.edu
 
 Directions to run team9-SchoolHygiene app:
 1. First download the zip file called team9-SchoolHygiene.zip.
