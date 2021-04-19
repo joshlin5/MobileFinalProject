@@ -14,7 +14,6 @@ import androidx.lifecycle.OnLifecycleEvent;
 public class Hallway extends AppCompatActivity implements CorrectDialog.correctDialogListener{
 
     // Previous activity's name, determines question shown
-    UserDatabase mUserDb;
     String previousActivity, username;
     Button highScoreButton, currentScoreButton, question, questionText, answer, answer1, answer2, answer3, destination, usernameDisplay;
     int highScore, currentScore;
@@ -25,7 +24,6 @@ public class Hallway extends AppCompatActivity implements CorrectDialog.correctD
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.hallway);
-        mUserDb = UserDatabase.getInstance(getApplicationContext());
 
         // Initializing shared pref file and editor
         prefs = this.getSharedPreferences("myPrefs.xml", Context.MODE_PRIVATE);
@@ -62,7 +60,7 @@ public class Hallway extends AppCompatActivity implements CorrectDialog.correctD
         destination.setVisibility(View.INVISIBLE);
 
         // Display high score and current score text
-        highScore = mUserDb.userDao().highScore(prefs.getString("username", "ERROR"));
+        highScore = prefs.getInt("highScore", -1);
         currentScore = prefs.getInt("currentScore", -1);
         highScoreButton.setText("High Score: " + highScore);
         currentScoreButton.setText("Current Score: " + currentScore);
