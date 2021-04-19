@@ -23,12 +23,9 @@ import com.android.volley.toolbox.Volley;
 
 
 public class FetchData extends Application {
-
     private RequestQueue mRequestQueue;
     private final String WEBAPI_BASE_URL = "https://api.openweathermap.org/data/2.5/weather?units=imperial&appid=6a10b16fd379129835d433d917aaf006";
     private final String TAG = "FetchData";
-
-
 
     //function
     public interface OnWeatherReceivedListener {
@@ -44,12 +41,10 @@ public class FetchData extends Application {
 
 
     public void fetchforecast(final OnWeatherReceivedListener listener, String lon, String lat) {
-
+        //Build string with params lon, lat add as Queries
         String url = Uri.parse(WEBAPI_BASE_URL).buildUpon()
                 .appendQueryParameter("lat", lat)
                 .appendQueryParameter("lon",lon).build().toString();
-
-
 
 
         JsonObjectRequest request = new JsonObjectRequest
@@ -75,25 +70,21 @@ public class FetchData extends Application {
 
     private List<Weather> parseJsonData(JSONObject json) {
 
-        // Create a list of subjects
+        // Create a list of data to be held
         List<Weather> data = new ArrayList<>();
 
         try {
             JSONObject dataObj = json.getJSONObject("main");
             JSONArray weatherArray = json.getJSONArray("weather");
             Weather field = new Weather();
-
             JSONObject subjectObj = weatherArray.getJSONObject(0);
-
             field.SetDesc(subjectObj.getString("description"));
+            //Add data to list
             data.add(field);
-
-
         }
         catch (Exception e) {
             Log.e(TAG, "One or more fields not found in the JSON data");
         }
-
 
         return data;
     }

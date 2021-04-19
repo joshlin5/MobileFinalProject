@@ -214,6 +214,7 @@ public class MainActivity extends AppCompatActivity implements GameInfoDialog.Ga
         matrix.postRotate(90);
         Bitmap bitmap1 = Bitmap.createBitmap(bitmap,0,0,targetW, targetH,matrix,true);
         // Display smaller bitmap
+
         mPhoto.setImageBitmap(bitmap1);
 
     }

@@ -60,8 +60,8 @@ public class Classroom extends AppCompatActivity implements CorrectDialog.correc
         usernameDisplay.setText("Username: " + username);
 
 
-        String explanation = "For now it is best to not share or come into contact with items others have commonly touched (pencils, pens, masks, scarves )" +
-                "Although for school standards you should ask your teacher to provide you with a clean pencil and sanitize if you can";
+        String explanation = "For now it is best to not share or come into contact with items others have commonly touched (pencils, pens, masks, scarves)." +
+                " Although for school standards you should ask your teacher to provide you with a clean pencil and sanitize if you can";
         // 1 is correct answer
         answer3.setOnClickListener(v -> {
             String correctAnswer = "Correct Answer! " + explanation;

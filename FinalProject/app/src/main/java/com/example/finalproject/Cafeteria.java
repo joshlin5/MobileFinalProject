@@ -124,7 +124,15 @@ public class Cafeteria extends AppCompatActivity implements CorrectDialog.correc
                 dialog.show(getSupportFragmentManager(), "Wrong Answer/Game Over");
             });
             destination.setOnClickListener(v -> {
+                String finished = "Congrats on completing a day of school! I hope you learned alot from this game!";
+                WinDialog dialog = new WinDialog(finished);
+                dialog.show(getSupportFragmentManager(), "Game Over");
+                /*
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.putExtra("previousActivity", "cafe");
+                startActivity(intent);
 
+                 */
             });
         }
         else {

@@ -31,6 +31,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import java.util.List;
 
 public class Weather extends AppCompatActivity  {
+
     private FetchData mFetchData;
     private final int REQUEST_LOCATION_PERMISSIONS = 0;
     private LocationManager locManager = null;
@@ -44,9 +45,16 @@ public class Weather extends AppCompatActivity  {
 
     private static final String TAG = "Weather";
 
-
-
+    /**
+     *
+     * @param List<Weather> data / Saved data from volley request
+     * @pre
+     * \
+     * @post
+     * description of weather will be updated and sent back to MainActivity
+     */
     private FetchData.OnWeatherReceivedListener mFetchListener =
+
             new FetchData.OnWeatherReceivedListener(){
             @Override
                 public void onDataReceived(List<Weather> data) {
@@ -63,6 +71,14 @@ public class Weather extends AppCompatActivity  {
                     Log.d(TAG,"error");
                 }
             };
+    /**
+     *
+     * @param savedInstanceState State of application to save
+     * @pre
+     * savedInstanceState = NULL or savedInstanceState = [some data]
+     * @post
+     * Longitude and latitiude will be set to a value.
+     */
     @SuppressLint("MissingPermission")
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -104,6 +120,7 @@ public class Weather extends AppCompatActivity  {
                     }
                 });
     }
+    //Check if permissions have been granted before
     private boolean hasLocationPermission() {
         // Request fine location permission if not already granted
         if (ContextCompat.checkSelfPermission(this,
@@ -118,6 +135,7 @@ public class Weather extends AppCompatActivity  {
     }
     @SuppressLint("MissingPermission")
     @Override
+    //This will request permissions and then attempt to find the location
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
