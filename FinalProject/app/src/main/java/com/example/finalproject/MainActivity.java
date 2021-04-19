@@ -87,10 +87,6 @@ public class MainActivity extends AppCompatActivity implements GameInfoDialog.Ga
             //Start camera app to take photo
             takePhotoClick();
         });
-        // Initializing database
-        mUserDb = UserDatabase.getInstance(getApplicationContext());
-        User user = new User("Bob", 10);
-        mUserDb.userDao().insertUser(user);
     }
 
     // For both GameInfoDialog and SameUsernameFragment callback
@@ -100,9 +96,10 @@ public class MainActivity extends AppCompatActivity implements GameInfoDialog.Ga
         String username = prefs.getString("username", "ERROR");
         // Check whether user is already in database or not
         int count = mUserDb.userDao().userCount(username);
+        System.out.print("USER: " + count);
         int highScore;
 
-        if (count > 0) {
+        if (count > 1) {
             // If username is already in database, find the highest score
             highScore = mUserDb.userDao().highScore(username);
             editor.putInt("highScore", highScore);

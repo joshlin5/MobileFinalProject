@@ -75,6 +75,8 @@ public class CorrectDialog extends DialogFragment {
             builder.setTitle("Game Over.");
             // If game over then store user and their score in the database
             User user = new User(prefs.getString("username", "ERROR"), prefs.getInt("currentScore", -1));
+            editor.putInt("currentScore", 0);
+            editor.apply();
             mUserDb.userDao().insertUser(user);
         }
 
