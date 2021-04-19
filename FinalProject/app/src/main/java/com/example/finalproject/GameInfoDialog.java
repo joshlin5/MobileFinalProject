@@ -56,7 +56,6 @@ public class GameInfoDialog extends DialogFragment{
         prefs = this.requireActivity().getSharedPreferences("myPrefs.xml", Context.MODE_PRIVATE);
         editor = prefs.edit();
 
-
         // Creating the "OK" and "Default" buttons
         builder.setView(inflater)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {

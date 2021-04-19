@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textSize="20sp"
-        android:text="Your goal: Go through your day at school while answering all questions correctly! When you go to a location in school, you will be asked questions. Answer all questions correctly to get points and move onto the next area. If you answer a single question wrong, you lose!"
+        android:text="Your goal: Go through your day at school while answering all questions correctly! When you go to a location in school, you will be asked questions.
+        Answer all questions correctly to get points and move onto the next area. If you answer a single question wrong, you lose!"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/sameUsername"
         app:layout_constraintRight_toRightOf="parent"
