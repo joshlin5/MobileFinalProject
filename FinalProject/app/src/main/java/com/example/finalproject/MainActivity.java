@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements GameInfoDialog.Ga
         prefs = this.getSharedPreferences("myPrefs.xml", Context.MODE_PRIVATE);
         editor = prefs.edit();
 
+        mUserDb = UserDatabase.getInstance(getApplicationContext());
         mPhoto = findViewById(R.id.background);
         // Initializing start button and setting onClick listener
         startButton = findViewById(R.id.startButton);
