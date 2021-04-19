@@ -210,12 +210,9 @@ public class MainActivity extends AppCompatActivity implements GameInfoDialog.Ga
         bmOptions.inPurgeable = true;
         Bitmap bitmap = BitmapFactory.decodeFile(mPhotoFile.getAbsolutePath(), bmOptions);
 
-        Matrix matrix = new Matrix();
-        matrix.postRotate(90);
-        Bitmap bitmap1 = Bitmap.createBitmap(bitmap,0,0,targetW, targetH,matrix,true);
-        // Display smaller bitmap
+       // Display smaller bitmap
 
-        mPhoto.setImageBitmap(bitmap1);
+        mPhoto.setImageBitmap(bitmap);
 
     }
 
